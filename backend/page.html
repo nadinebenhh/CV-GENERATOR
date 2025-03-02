@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page principale</title>
+    
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="page.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur le générateur de CV</h1>
+        
+        <!-- Bouton pour créer un CV -->
+        <button id="createCvBtn">Créer un CV</button>
+
+        <!-- Choix du modèle (initialement caché) -->
+        <div id="modelChoiceSection" style="display: none;">
+            <label>Choisissez un modèle de CV :</label>
+            <div class="model-cards">
+                <div class="card" id="modele1">
+                    <img src="images/modele1.jpg" alt="Modèle 1" class="model-card-img">
+                    <p>Modèle 1</p>
+                </div>
+                
+                <div class="card" id="modele2">
+                    <img src="images/modele2.jpg" alt="Modèle 2" class="model-card-img">
+                    <p>Modèle 2</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire pour créer un CV (initialement caché) -->
+        <div id="cvFormSection" style="display: none;">
+            <h2>Formulaire de création de CV</h2>
+            <form id="cvForm" enctype="multipart/form-data">
+                <label for="title">Titre du CV :</label>
+                <input type="text" id="title" required>
+
+                <label for="phone_number">Numéro de téléphone :</label>
+                <input type="text" id="phone_number" pattern="\d{8}" required>
+
+                <label for="location">Adresse :</label>
+                <input type="text" id="location" required>
+
+                <label for="city_or_zip">Ville ou Code Postal :</label>
+                <input type="text" id="city_or_zip" required>
+
+                <label for="linkedin">Profil LinkedIn :</label>
+                <input type="url" id="linkedin">
+
+                <label for="experiences">Expériences :</label>
+                <textarea id="experiences" required></textarea>
+
+                <label for="education">Éducation :</label>
+                <textarea id="education" required></textarea>
+
+                <label for="skills">Compétences :</label>
+                <textarea id="skills" required></textarea>
+
+                <label for="certifications">Certifications :</label>
+                <textarea id="certifications"></textarea>
+
+                <label for="interests">Centres d'intérêt :</label>
+                <textarea id="interests"></textarea>
+
+                <label for="professional_project">Projet professionnel :</label>
+                <textarea id="professional_project" required></textarea>
+
+                <!-- Champ pour uploader la photo (affiché uniquement si nécessaire) -->
+                <div id="photoUpload" style="display: none;">
+                    <label for="photo">Ajouter une photo :</label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                </div>
+
+                <button type="submit">Générer CV</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lien vers le fichier JavaScript -->
+    <script src="page.js"></script>
+
+    <script>
+        // Afficher le choix du modèle lorsque l'utilisateur clique sur "Créer un CV"
+        document.getElementById('createCvBtn').addEventListener('click', function() {
+            document.getElementById('modelChoiceSection').style.display = 'block';
+        });
+
+        // Afficher le formulaire après avoir sélectionné un modèle
+        document.getElementById('modele1').addEventListener('click', function() {
+            document.getElementById('modelChoiceSection').style.display = 'none';
+            document.getElementById('cvFormSection').style.display = 'block';
+        });
+
+        document.getElementById('modele2').addEventListener('click', function() {
+            document.getElementById('modelChoiceSection').style.display = 'none';
+            document.getElementById('cvFormSection').style.display = 'block';
+        });
+    </script>
+    
+
+    <!-- Zone où le CV généré sera affiché -->
+<div id="cvContainer" style="display: none;">
+    <h2>Votre CV généré</h2>
+    <div id="cvContent"></div>  <!-- Le contenu du CV sera inséré ici -->
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+/* Style global */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Conteneur principal avec une bordure */
+.cv-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #000; /* Bordure autour de la page */
+}
+
+/* En-tête */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+header h2 {
+  font-size: 1.5em;
+  margin: 5px 0;
+  color: #666;
+}
+
+header .description {
+  font-size: 1em;
+  margin: 10px 0;
+  color: #555;
+}
+
+header .contact-info {
+  font-size: 0.9em;
+  color: #888;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+/* Mise en page des colonnes */
+main {
+  display: flex;
+  flex-wrap: wrap; /* Pour s'adapter aux petits écrans */
+  gap: 20px;
+}
+
+/* Colonne gauche */
+.left-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Colonne droite */
+.right-column {
+  flex: 2;
+  min-width: 300px;
+}
+
+/* Sections (Formations, Compétences, etc.) */
+.section {
+  margin-bottom: 20px;
+}
+
+/* 
+   Grands cercles vides devant 
+   Formations, Compétences, Expériences, etc.
+*/
+.section h3 {
+  position: relative;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  /* On retire la bordure si on ne veut plus de ligne de séparation
+     border-bottom: 1px dotted #ddd;
+  */
+}
+
+/* Grand cercle vide avant chaque h3 de section */
+.section h3::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #333;  /* Cercle vide */
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Listes sans puces */
+.section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* On supprime les cercles/points devant chaque élément de liste */
+.section ul li {
+  margin-bottom: 10px;
+  color: #555;
+  padding-left: 0; /* pas d'espace pour un pseudo-élément */
+}
+
+/* Expériences */
+.experience {
+  margin-bottom: 20px;
+}
+
+.experience h4 {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.experience p {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 10px;
+}
