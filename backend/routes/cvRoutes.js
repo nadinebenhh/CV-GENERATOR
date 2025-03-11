@@ -93,7 +93,14 @@ router.post('/cv/generate', authenticateToken, async (req, res) => {
       // Compiler le template avec Handlebars
       const template = Handlebars.compile(templateSource);
       const filledTemplate = template(data);
-
+      const express = require('express');
+      const router = express.Router();
+      const { generateCv } = require('../controllers/cvController');
+      
+      router.post('/generate-pdf', generateCv);
+      
+      module.exports = router;
+      
       // Vérification et création du dossier "generated" si nécessaire
       const generatedDir = path.join(process.cwd(), 'generated');
       if (!fs.existsSync(generatedDir)) {
@@ -111,7 +118,7 @@ router.post('/cv/generate', authenticateToken, async (req, res) => {
     }
   });
 });
-
+router.post('/generate-pdf/:fileName', cvController.generatePDF);
 // Route pour traiter la soumission du formulaire de génération du CV
 router.post('/cv/generate-with-photo', authenticateToken, upload.single('photo'), async (req, res) => {
   const { title, phone_number, location, city_or_zip, linkedin, experiences, education, skills, certifications, interests, professional_project, cv_model } = req.body;

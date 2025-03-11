@@ -3,27 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page principale</title>
-    
-    <!-- Lien vers le fichier CSS -->
+    <title>Générateur de CV</title>
     <link rel="stylesheet" href="page.css">
+    <style>
+        /* Style de la fenêtre modale */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* Styles pour le bouton de fermeture */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Styles des autres éléments */
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Bienvenue sur le générateur de CV</h1>
         
         <!-- Bouton pour créer un CV -->
-        <button id="createCvBtn">Créer un CV</button>
+        <button id="createCvBtn" class="btn">Créer un CV</button>
 
         <!-- Choix du modèle (initialement caché) -->
-        <div id="modelChoiceSection" style="display: none;">
+        <div id="modelChoiceSection" class="hidden">
             <label>Choisissez un modèle de CV :</label>
             <div class="model-cards">
                 <div class="card" id="modele1">
                     <img src="images/modele1.jpg" alt="Modèle 1" class="model-card-img">
                     <p>Modèle 1</p>
                 </div>
-                
                 <div class="card" id="modele2">
                     <img src="images/modele2.jpg" alt="Modèle 2" class="model-card-img">
                     <p>Modèle 2</p>
@@ -32,7 +73,7 @@
         </div>
 
         <!-- Formulaire pour créer un CV (initialement caché) -->
-        <div id="cvFormSection" style="display: none;">
+        <div id="cvFormSection" class="hidden">
             <h2>Formulaire de création de CV</h2>
             <form id="cvForm" enctype="multipart/form-data">
                 <label for="title">Titre du CV :</label>
@@ -68,44 +109,85 @@
                 <label for="professional_project">Projet professionnel :</label>
                 <textarea id="professional_project" required></textarea>
 
-                <!-- Champ pour uploader la photo (affiché uniquement si nécessaire) -->
-                <div id="photoUpload" style="display: none;">
+                <div id="photoUpload" class="hidden">
                     <label for="photo">Ajouter une photo :</label>
                     <input type="file" id="photo" name="photo" accept="image/*">
                 </div>
 
-                <button type="submit">Générer CV</button>
+                <button type="submit" class="btn">Générer CV</button>
             </form>
         </div>
+    </div>
+
+    <!-- Zone où le CV généré sera affiché -->
+    <div id="cvContainer" class="hidden">
+        <h2>Votre CV généré</h2>
+        <div id="cvContent"></div>
     </div>
 
     <!-- Lien vers le fichier JavaScript -->
     <script src="page.js"></script>
 
+    <!-- Modale pour l'inscription -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeRegistrationModal">&times;</span>
+            <h2>Inscription</h2>
+            <form action="#">
+                <input type="text" placeholder="Prénom" required><br>
+                <input type="text" placeholder="Nom" required><br>
+                <input type="email" placeholder="Email" required><br>
+                <input type="password" placeholder="Mot de passe" required><br>
+                <button type="submit">S'inscrire</button>
+            </form>
+            <p>Vous avez déjà un compte ? <a href="#" id="showLoginModal">Se connecter</a></p>
+        </div>
+    </div>
+
+    <!-- Modale pour la connexion -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+            <h2>Connexion</h2>
+            <form action="#">
+                <input type="email" placeholder="Email" required><br>
+                <input type="password" placeholder="Mot de passe" required><br>
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Afficher le choix du modèle lorsque l'utilisateur clique sur "Créer un CV"
-        document.getElementById('createCvBtn').addEventListener('click', function() {
-            document.getElementById('modelChoiceSection').style.display = 'block';
-        });
+        // Afficher la modale d'inscription lors du premier accès
+        window.onload = function() {
+            document.getElementById('registrationModal').style.display = "block";
+        };
 
-        // Afficher le formulaire après avoir sélectionné un modèle
-        document.getElementById('modele1').addEventListener('click', function() {
-            document.getElementById('modelChoiceSection').style.display = 'none';
-            document.getElementById('cvFormSection').style.display = 'block';
-        });
+        // Gestion de la fermeture de la modale d'inscription
+        document.getElementById('closeRegistrationModal').onclick = function() {
+            document.getElementById('registrationModal').style.display = "none";
+        };
 
-        document.getElementById('modele2').addEventListener('click', function() {
-            document.getElementById('modelChoiceSection').style.display = 'none';
-            document.getElementById('cvFormSection').style.display = 'block';
-        });
+        // Afficher la modale de connexion après l'inscription
+        document.getElementById('showLoginModal').onclick = function(event) {
+            event.preventDefault();
+            document.getElementById('registrationModal').style.display = "none";
+            document.getElementById('loginModal').style.display = "block";
+        };
+
+        // Gestion de la fermeture de la modale de connexion
+        document.getElementById('closeLoginModal').onclick = function() {
+            document.getElementById('loginModal').style.display = "none";
+            document.getElementById('createCvBtn').style.display = "block"; // Afficher la page principale
+        };
+
+        // Fermer la fenêtre modale en cliquant en dehors de la fenêtre modale
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('registrationModal') || event.target == document.getElementById('loginModal')) {
+                document.getElementById('registrationModal').style.display = "none";
+                document.getElementById('loginModal').style.display = "none";
+            }
+        };
     </script>
-    
-
-    <!-- Zone où le CV généré sera affiché -->
-<div id="cvContainer" style="display: none;">
-    <h2>Votre CV généré</h2>
-    <div id="cvContent"></div>  <!-- Le contenu du CV sera inséré ici -->
-</div>
-
 </body>
 </html>

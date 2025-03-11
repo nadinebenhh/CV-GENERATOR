@@ -4,9 +4,12 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";  // Assurez-vous que ce chemin est correct
 import cvRoutes from "./routes/cvRoutes.js";  // Ajout de la route CV
 import path from 'path';  // Importation de 'path' pour la gestion des fichiers
+import cvController from './controllers/cvController.js';  // Ajout de l'import pour le contrôleur CV
 
 // Chargement des variables d'environnement
 dotenv.config();
+
+
 console.log("JWT_SECRET:", process.env.JWT_SECRET); // Log pour vérifier la valeur de JWT_SECRET
 
 const app = express();
@@ -17,7 +20,8 @@ app.use(cors());
 app.use(cors({
     exposedHeaders: ["Authorization"]
 }));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Middleware pour parser le JSON dans les requêtes
 app.use(express.json());
 
@@ -63,6 +67,7 @@ app.use((err, req, res, next) => {
     next();
   }
 });
+
 // Ajouter cette route dans server.js pour envoyer le CV généré
 app.get('/generated/:cvFile', (req, res) => {
   const filePath = path.join(__dirname, 'generated', req.params.cvFile);
@@ -73,6 +78,13 @@ app.get('/generated/:cvFile', (req, res) => {
       }
   });
 });
+
+// Nouvelle route pour générer un PDF via le contrôleur CV
+app.get("/download-pdf/:fileName", cvController.generatePDF);
+// Servir les fichiers PDF depuis le dossier 'pdf'
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+app.use('/pdf', express.static(path.join(__dirname, 'pdf')));
+
 
 // Lancer le serveur
 app.listen(PORT, () => {

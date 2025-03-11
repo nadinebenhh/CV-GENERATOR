@@ -1,6 +1,3 @@
-/* Importation de la police Inter depuis Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -177,12 +174,6 @@ body.show-chatbot .chatbot-popup {
   border-radius: 13px 13px 3px 13px;
 }
 
-.chat-body .user-message .attachment {
-  width: 50%;
-  margin-top: -7px;
-  border-radius: 13px 3px 13px 13px;
-}
-
 /* Indicateur de "pensée" pour la réponse du bot */
 .chat-body .bot-message.thinking .message-text {
   padding: 2px 16px;
@@ -201,18 +192,6 @@ body.show-chatbot .chatbot-popup {
   border-radius: 50%;
   background: #6f6bc2;
   animation: dotPulse 1.8s ease-in-out infinite;
-}
-
-.chat-body .bot-message .thinking-indicator .dot:nth-child(1) {
-  animation-delay: 0.2s;
-}
-
-.chat-body .bot-message .thinking-indicator .dot:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.chat-body .bot-message .thinking-indicator .dot:nth-child(3) {
-  animation-delay: 0.4s;
 }
 
 @keyframes dotPulse {
@@ -287,8 +266,7 @@ body.show-chatbot .chatbot-popup {
   transition: 0.2s ease;
 }
 
-.chat-controls button:hover,
-body.show-emoji-picker .chat-controls #emoji-picker {
+.chat-controls button:hover {
   color: #3d39ac;
   background: #f1f1ff;
 }
@@ -305,55 +283,6 @@ body.show-emoji-picker .chat-controls #emoji-picker {
 
 .message-input:valid ~ .chat-controls #send-message {
   display: block;
-}
-
-/* Gestion de l'upload de fichier */
-.file-upload-wrapper {
-  position: relative;
-  height: 35px;
-  width: 35px;
-}
-
-.file-upload-wrapper :where(button, img) {
-  position: absolute;
-}
-
-.file-upload-wrapper img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-#file-cancel {
-  color: #ff0000;
-  background: #fff;
-}
-
-.file-upload-wrapper :where(img, #file-cancel),
-.file-upload-wrapper.file-uploaded #file-upload {
-  display: none;
-}
-
-.file-upload-wrapper.file-uploaded img,
-.file-upload-wrapper.file-uploaded:hover #file-cancel {
-  display: block;
-}
-
-/* Positionnement de l'emoji picker */
-em-emoji-picker {
-  position: absolute;
-  left: 50%;
-  top: -337px;
-  width: 100%;
-  max-width: 350px;
-  visibility: hidden;
-  max-height: 330px;
-  transform: translateX(-50%);
-}
-
-body.show-emoji-picker em-emoji-picker {
-  visibility: visible;
 }
 
 /* Responsive pour mobile */
@@ -378,8 +307,5 @@ body.show-emoji-picker em-emoji-picker {
   }
   .chat-footer {
     padding: 10px 15px 15px;
-  }
-  .file-upload-wrapper.file-uploaded #file-cancel {
-    opacity: 0;
   }
 }
